@@ -62,14 +62,14 @@
 {
     \vbox{}
     \vspace*{0.5cm}
-    \begin{centering}
+    \begin{center}
         {\usebeamerfont{title}\inserttitle\par}
         \vskip0.5cm\par
         \begin{beamercolorbox}[sep=8pt,center]{author}
             \usebeamerfont{author}\insertauthor
         \end{beamercolorbox}
         {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
-    \end{centering}
+    \end{center}
     \vfill
 
     \begin{tikzpicture}[remember picture, overlay]
@@ -129,6 +129,12 @@
     }
 
     \only<2>{
+        \begin{center}
+            \includegraphics*[keepaspectratio=true,scale=0.2]{ostergard-paper.png}
+        \end{center}
+    }
+
+    \only<3>{
         \begin{itemize}
             \item Let $G[V']$ be the subgraph of $G$ induced by $V'$
                 \begin{itemize}
@@ -146,27 +152,27 @@
         \end{itemize}
     }
 
-    \only<3>{
+    \only<4>{
         \begin{itemize}
-            \item Write out the vertices of a graph in some fixed (static) order.
+            \item Write out the vertices of a graph in some static order, $v_1, v_2, \ldots, v_n$.
 
             \item Let $V_i$ be the vertices $\{ v_i, v_{i + 1}, \ldots, v_n \}$.
 
-            \item Now $\omega(G[V_n])$ is $1$.
+            \item $\omega(G[V_n])$ is $1$.
 
-            \item And $\omega(G[V_i])$ is either $\omega(G[V_{i + 1}])$ or $\omega(G[V_{i + 1}]) + 1$.
+            \item $\omega(G[V_i])$ is either $\omega(G[V_{i + 1}])$ or $\omega(G[V_{i + 1}]) + 1$.
                 \begin{itemize}
                     \item And if the latter, it must contain $v_i$.
                 \end{itemize}
 
-            \item And $\omega(G)$ is $\omega(G[V_1])$.
+            \item $\omega(G)$ is $\omega(G[V_1])$.
 
             \item So we find $\omega(G[V_n])$, then $\omega(G[V_{n - 1}])$, and so on, down to
                 $\omega(G[V_1]) = \omega(G)$.
         \end{itemize}
     }
 
-    \only<4>{
+    \only<5>{
         \begin{itemize}
             \item We grow cliques recursively: $C$ is our growing clique, and $P$ is the undecided
                 vertices which can be added to $C$.
@@ -176,7 +182,7 @@
         \end{itemize}
     }
 
-    \only<5>{
+    \only<6>{
         \begin{itemize}
             \item Now the clever bit: if $j$ is the lowest-numbered vertex left in $P$, then
                 $\omega(G[V_j])$ gives us a bound on how much further we can extend the growing
@@ -197,18 +203,9 @@
 
 \end{frame}
 
-\begin{frame}{Russian Doll Search}
+\begin{frame}{Valued Constraint Satisfaction Problems}
 
     \only<1>{
-        \begin{center}
-            \includegraphics*[keepaspectratio=true,scale=0.4]{russiandolls.jpg}
-
-            \vspace{2em}
-            \tiny \url{http://commons.wikimedia.org/wiki/File:Russian-Matroshka2.jpg} (cropped), CC-BY-SA 3.0
-        \end{center}
-    }
-
-    \only<2>{
         \begin{itemize}
             \item A Valued Constraint Satisfaction Problem has a set of variables, a set of
                 constraints, and a well-behaved way of assigning a cost to violating a subset of the
@@ -220,15 +217,39 @@
                     \end{itemize}
 
             \item We seek an assignment of values to variables which minimises this cost.
-
-            \item A simple lower bound looks at violations in already-assigned variables (backward
-                checking).
-
-            \item We can also look at constraints which have only one unassigned variable (forward
-                checking).
         \end{itemize}
     }
 
+    \only<2>{
+        \begin{itemize}
+            \item A simple lower bound looks at violations in already-assigned variables (backward
+                checking).
+            \item Add up the costs of all of the constraints we've already violated.
+            \item If the cost of the constraints we've violated so far is greater than or
+                equal to the cost of the best solution we've found so far, we can backtrack
+                immediately.
+        \end{itemize}
+    }
+
+    \only<3>{
+        \begin{itemize}
+            \item We can also look at constraints which have only one unassigned variable (forward
+                checking).
+            \item For each constraint with one uninstantiated variable, pick the value for that
+                variable that has the cheapest cost. Now add these costs together.
+        \end{itemize}
+    }
+\end{frame}
+
+\begin{frame}{Russian Doll Search}
+    \only<1>{
+        \begin{center}
+            \includegraphics*[keepaspectratio=true,scale=0.4]{russiandolls.jpg}
+
+            \vspace{2em}
+            \tiny \url{http://commons.wikimedia.org/wiki/File:Russian-Matroshka2.jpg} (cropped), CC-BY-SA 3.0
+        \end{center}
+    }
 \end{frame}
 
 \begin{frame}[b]
