@@ -196,7 +196,7 @@
             \item This is a better bound than $|P|$, because it knows about relationships between
                 undecided vertices.
 
-            \item This has fallen out of fashion, for clique: dynamic variable orderings and better
+            \item This fell out of fashion, for clique: dynamic variable orderings and better
                 bounds through colouring give vastly better results.
         \end{itemize}
     }
@@ -222,21 +222,36 @@
 
     \only<2>{
         \begin{itemize}
+            \item For maximum clique:
+            \item A boolean variable $V_i$ for each vertex $v_i$, determining whether it is in the
+                clique.
+            \item For each pair of nonadjacent vertices $v_i$ and $v_j$, a constraint ``not
+                ($V_i$ and $V_j$)'', with cost infinity.
+            \item For each vertex, a constraint ``$V_i$ is true'', with cost 1.
+            \item The total cost is the sum of the cost of violated constraints, and tells us the
+                number of vertices \emph{not} in the clique.
+        \end{itemize}
+    }
+
+    \only<3>{
+        \begin{itemize}
             \item A simple lower bound looks at violations in already-assigned variables (backward
                 checking).
             \item Add up the costs of all of the constraints we've already violated.
             \item If the cost of the constraints we've violated so far is greater than or
                 equal to the cost of the best solution we've found so far, we can backtrack
                 immediately.
+            \item For clique: how many vertices have we rejected so far?
         \end{itemize}
     }
 
-    \only<3>{
+    \only<4>{
         \begin{itemize}
             \item We can also look at constraints which have only one unassigned variable (forward
                 checking).
             \item For each constraint with one uninstantiated variable, pick the value for that
                 variable that has the cheapest cost. Now add these costs together.
+            \item For clique: how many vertices can no longer be included?
         \end{itemize}
     }
 \end{frame}
@@ -250,6 +265,61 @@
             \tiny \url{http://commons.wikimedia.org/wiki/File:Russian-Matroshka2.jpg} (cropped), CC-BY-SA 3.0
         \end{center}
     }
+
+    \only<2>{
+        \begin{itemize}
+            \item Write out the variables in some static order, $V_1, V_2, \ldots, V_n$.
+            \item Solve the problem containing just $V_n$, and remember the cost.
+            \item Solve the problem containing just $V_{n - 1}$ and $V_n$, using the static variable
+                ordering, and remember the cost. If at any point the cost of a partial assignment
+                plus the best cost of assigning $V_n$ (which we know) is more than the best so far,
+                backtrack immediately.
+            \item And so on, until we solve for all variables.
+        \end{itemize}
+    }
+
+    \only<3>{
+        \begin{itemize}
+            \item Typically, the Russian dolls pass is used only once, at the top of search. After that,
+                regular branch and bound is used.
+
+            \item We could do Russian dolls at every level. But this is very expensive, and might not
+                improve the bound by much.
+        \end{itemize}
+    }
+\end{frame}
+
+\begin{frame}{Where is it Used?}
+    \only<1>{
+        \begin{itemize}
+            \item Seems to be good if we have a fairly well-behaved objective function, but a very
+                weak bound.
+        \end{itemize}
+    }
+\end{frame}
+
+\begin{frame}{Pseudo-Tree Decompositions}
+\end{frame}
+
+\begin{frame}{Specialisation}
+    \only<1>{
+        \begin{itemize}
+            \item Instead of looking at variables, we can look at variable-value pairs.
+            \item This is even more expensive, but sometimes it pays off.
+            \item Sometimes it's possible to do this selectively.
+        \end{itemize}
+    }
+\end{frame}
+
+\begin{frame}{Elimination Rules}
+    \begin{itemize}
+        \item We can reduce the number of dolls using a greedy heuristic: we can move variables that
+            may be added without increasing the cost to the left of our current variable, and skip
+            the following iterations.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Parallelism?}
 \end{frame}
 
 \begin{frame}[b]
