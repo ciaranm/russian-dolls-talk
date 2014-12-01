@@ -6,6 +6,7 @@
 \usepackage{xcolor}
 \usepackage{complexity}
 \usepackage{hyperref}
+\usepackage{microtype}
 \usepackage[vlined]{algorithm2e} % algorithms
 
 \usetikzlibrary{shapes, arrows, shadows, calc, positioning, fit}
@@ -195,10 +196,36 @@
 
             \item This is a better bound than $|P|$, because it knows about relationships between
                 undecided vertices.
-
-            \item This fell out of fashion, for clique: dynamic variable orderings and better
-                bounds through colouring give vastly better results.
         \end{itemize}
+
+        \begin{center}
+            \begin{tikzpicture}%{{{
+                \node (V3) [draw, circle, inner sep = 2pt] at (0, 0) { $v_3$ };
+                \node (V4) [draw, circle, inner sep = 2pt] at (1, 0) { $v_4$ };
+                \node (V5) [draw, circle, inner sep = 2pt] at (2, 0) { $v_5$ };
+                \node (V6) [draw, circle, inner sep = 2pt] at (3, 0) { $v_6$ };
+                \node (V7) [draw, circle, inner sep = 2pt] at (4, 0) { $v_7$ };
+                \node (V8) [draw, circle, inner sep = 2pt] at (5, 0) { $v_8$ };
+
+                \node at (0, -0.7) { $?$ };
+                \node at (1, -0.7) { $3$ };
+                \node at (2, -0.7) { $2$ };
+                \node at (3, -0.7) { $2$ };
+                \node at (4, -0.7) { $1$ };
+                \node at (5, -0.7) { $1$ };
+
+                \draw [color = gray] (V6) to [out = 45, in = 135] (V8);
+                \draw [color = gray] (V5) to [out = 45, in = 135] (V7);
+                \draw [color = gray] (V4) to [out = 45, in = 135] (V5);
+                \draw [color = gray] (V4) to [out = 45, in = 135] (V7);
+                \draw [color = gray] (V4) to [out = 45, in = 135] (V8);
+
+                \draw (V3) to [out = 45, in = 135] (V5);
+                \draw (V3) to [out = 45, in = 135] (V6);
+                \draw (V3) to [out = 45, in = 135] (V7);
+                \draw (V3) to [out = 45, in = 135] (V8);
+            \end{tikzpicture}%}}}
+        \end{center}
     }
 
 \end{frame}
@@ -222,14 +249,16 @@
 
     \only<2>{
         \begin{itemize}
-            \item For maximum clique:
-            \item A boolean variable $V_i$ for each vertex $v_i$, determining whether it is in the
-                clique.
-            \item For each pair of nonadjacent vertices $v_i$ and $v_j$, a constraint ``not
-                ($V_i$ and $V_j$)'', with cost infinity.
-            \item For each vertex, a constraint ``$V_i$ is true'', with cost 1.
-            \item The total cost is the sum of the cost of violated constraints, and tells us the
-                number of vertices \emph{not} in the clique.
+            \item One possible model for maximum clique:
+                \begin{itemize}
+                    \item A boolean variable $V_i$ for each vertex $v_i$, determining whether it is in the
+                        clique.
+                    \item For each pair of nonadjacent vertices $v_i$ and $v_j$, a constraint ``not
+                        ($V_i$ and $V_j$)'', with cost infinity.
+                    \item For each vertex, a constraint ``$V_i$ is true'', with cost 1.
+                    \item The total cost is the sum of the cost of violated constraints, and tells us the
+                        number of vertices \emph{not} in the clique.
+            \end{itemize}
         \end{itemize}
     }
 
@@ -259,6 +288,12 @@
 \begin{frame}{Russian Doll Search}
     \only<1>{
         \begin{center}
+            \includegraphics*[keepaspectratio=true,scale=0.2]{dolls-paper.png}
+        \end{center}
+    }
+
+    \only<2>{
+        \begin{center}
             \includegraphics*[keepaspectratio=true,scale=0.4]{russiandolls.jpg}
 
             \vspace{2em}
@@ -266,7 +301,7 @@
         \end{center}
     }
 
-    \only<2>{
+    \only<3>{
         \begin{itemize}
             \item Write out the variables in some static order, $V_1, V_2, \ldots, V_n$.
             \item Solve the problem containing just $V_n$, and remember the cost.
@@ -278,7 +313,7 @@
         \end{itemize}
     }
 
-    \only<3>{
+    \only<4>{
         \begin{itemize}
             \item Typically, the Russian dolls pass is used only once, at the top of search. After that,
                 regular branch and bound is used.
@@ -294,19 +329,123 @@
         \begin{itemize}
             \item Seems to be good if we have a fairly well-behaved objective function, but a very
                 weak bound.
+
+                \begin{itemize}
+                    \item Earth Observation Satellite Scheduling
+                    \item Radio Link Frequency Assignment
+                    \item DNA Analysis
+                    \item Still-Life (until Chu and Stuckey solved it)
+                \end{itemize}
+        \end{itemize}
+    }
+
+    \only<2>{
+        \begin{center}
+            \includegraphics*[keepaspectratio=true,scale=0.4]{vaskelainen-paper.png}
+        \end{center}
+
+        \begin{itemize}
+            \item Covering problems in directed graphs and hypergraphs:
+                \begin{itemize}
+                    \item Steiner triple
+                    \item Maximum transitive subtournament
+                    \item Best barbequeue
+                \end{itemize}
         \end{itemize}
     }
 \end{frame}
 
 \begin{frame}{Pseudo-Tree Decompositions}
+    \only<1>{
+        \begin{center}
+            \includegraphics*[keepaspectratio=true,scale=0.2]{larrosa-paper.png}
+        \end{center}
+
+        \vspace{2em}
+
+        \begin{center}
+            \includegraphics*[keepaspectratio=true,scale=0.5]{sanchez-paper.png}
+        \end{center}
+    }
+
+    \only<2-3>{
+        \begin{center}
+            \begin{tikzpicture}%{{{
+                \node (V1) [draw, circle, inner sep = 2pt] at (0, 0) { $V_1$ };
+                \node (V2) [draw, circle, inner sep = 2pt] at (1, 0) { $V_2$ };
+                \node (V3) [draw, circle, inner sep = 2pt] at (2, 0) { $V_3$ };
+                \node (V4) [draw, circle, inner sep = 2pt] at (3, 0) { $V_4$ };
+                \node (V5) [draw, circle, inner sep = 2pt] at (4, 0) { $V_5$ };
+                \node (V6) [draw, circle, inner sep = 2pt] at (5, 0) { $V_6$ };
+                \node (V7) [draw, circle, inner sep = 2pt] at (6, 0) { $V_7$ };
+
+                \draw (V1) -- (V2);
+                \draw (V2) -- (V3);
+                \draw (V3) -- (V4);
+                \draw (V4) -- (V5);
+                \draw (V5) -- (V6);
+                \draw (V6) -- (V7);
+            \end{tikzpicture}%}}}
+        \end{center}
+
+        \vspace*{0.5cm}
+
+        \begin{center}
+            \begin{tikzpicture}%{{{
+                \node <2> (V1) [draw, circle, inner sep = 2pt] at (0, -1) { $V_1$ };
+                \node <2> (V2) [draw, circle, inner sep = 2pt] at (1, -1.5) { $V_2$ };
+                \node <2> (V3) [draw, circle, inner sep = 2pt] at (2, -2) { $V_3$ };
+                \node <2> (V4) [draw, circle, inner sep = 2pt] at (3, -2.5) { $V_4$ };
+                \node <2> (V5) [draw, circle, inner sep = 2pt] at (4, -3) { $V_5$ };
+                \node <2> (V6) [draw, circle, inner sep = 2pt] at (5, -3.5) { $V_6$ };
+                \node <2> (V7) [draw, circle, inner sep = 2pt] at (6, -4) { $V_7$ };
+
+                \draw <2> [arrows=->] (V1) -> (V2);
+                \draw <2> [arrows=->] (V2) -> (V3);
+                \draw <2> [arrows=->] (V3) -> (V4);
+                \draw <2> [arrows=->] (V4) -> (V5);
+                \draw <2> [arrows=->] (V5) -> (V6);
+                \draw <2> [arrows=->] (V6) -> (V7);
+
+                \node <3> (V1) [draw, circle, inner sep = 2pt] at (0, -3) { $V_1$ };
+                \node <3> (V2) [draw, circle, inner sep = 2pt] at (1, -2) { $V_2$ };
+                \node <3> (V3) [draw, circle, inner sep = 2pt] at (2, -3) { $V_3$ };
+                \node <3> (V4) [draw, circle, inner sep = 2pt] at (3, -1) { $V_4$ };
+                \node <3> (V5) [draw, circle, inner sep = 2pt] at (4, -3) { $V_5$ };
+                \node <3> (V6) [draw, circle, inner sep = 2pt] at (5, -2) { $V_6$ };
+                \node <3> (V7) [draw, circle, inner sep = 2pt] at (6, -3) { $V_7$ };
+
+                \draw <3> [arrows=->] (V2) -> (V1);
+                \draw <3> [arrows=->] (V2) -> (V3);
+                \draw <3> [arrows=->] (V4) -> (V2);
+                \draw <3> [arrows=->] (V4) -> (V6);
+                \draw <3> [arrows=->] (V6) -> (V5);
+                \draw <3> [arrows=->] (V6) -> (V7);
+
+                \node at (6, -4.5) { ~ };
+            \end{tikzpicture}%}}}
+        \end{center}
+    }
+
+    \only<4>{
+        \begin{center}
+            \includegraphics*[keepaspectratio=true,scale=0.6]{kerning.png}
+
+            \vspace{1em}
+            \tiny \url{http://xkcd.com/1015/} (Randall Munroe), CC-BY-NC 2.5
+        \end{center}
+    }
 \end{frame}
 
 \begin{frame}{Specialisation}
     \only<1>{
+        \begin{center}
+            \includegraphics*[keepaspectratio=true,scale=0.2]{specialisation-paper.png}
+        \end{center}
+
         \begin{itemize}
-            \item Instead of looking at variables, we can look at variable-value pairs.
-            \item This is even more expensive, but sometimes it pays off.
-            \item Sometimes it's possible to do this selectively.
+            \item Instead of looking at variables, look at variable-value pairs.
+            \item This is even more expensive, but sometimes it pays off if we do it selectively.
         \end{itemize}
     }
 \end{frame}
