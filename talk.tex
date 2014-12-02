@@ -214,11 +214,11 @@
                 \node at (4, -0.7) { $1$ };
                 \node at (5, -0.7) { $1$ };
 
-                \draw [color = gray] (V6) to [out = 45, in = 135] (V8);
-                \draw [color = gray] (V5) to [out = 45, in = 135] (V7);
-                \draw [color = gray] (V4) to [out = 45, in = 135] (V5);
-                \draw [color = gray] (V4) to [out = 45, in = 135] (V7);
-                \draw [color = gray] (V4) to [out = 45, in = 135] (V8);
+                \draw [color = screengrey] (V6) to [out = 45, in = 135] (V8);
+                \draw [color = screengrey] (V5) to [out = 45, in = 135] (V7);
+                \draw [color = screengrey] (V4) to [out = 45, in = 135] (V5);
+                \draw [color = screengrey] (V4) to [out = 45, in = 135] (V7);
+                \draw [color = screengrey] (V4) to [out = 45, in = 135] (V8);
 
                 \draw (V3) to [out = 45, in = 135] (V5);
                 \draw (V3) to [out = 45, in = 135] (V6);
@@ -309,6 +309,7 @@
                 ordering, and remember the cost. If at any point the cost of a partial assignment
                 plus the best cost of assigning $V_n$ (which we know) is more than the best so far,
                 backtrack immediately.
+            \item Now add $V_{n - 2}$ and solve.
             \item And so on, until we solve for all variables.
         \end{itemize}
     }
@@ -334,7 +335,7 @@
                     \item Earth Observation Satellite Scheduling
                     \item Radio Link Frequency Assignment
                     \item DNA Analysis
-                    \item Still-Life (until Chu and Stuckey solved it)
+                    \item Maximum Density Still-Life (until Chu and Stuckey solved it)
                 \end{itemize}
         \end{itemize}
     }
@@ -462,6 +463,11 @@
 \end{frame}
 
 \begin{frame}[b]
+        \small
+        \begin{semiverbatim}
+17:31 < sdstrowes> you know the problem with russian dolls?
+17:31 < sdstrowes> they're just so full of themselves.
+        \end{semiverbatim}
     \vfill
     \begin{center}
     \url{http://dcs.gla.ac.uk/~ciaran} \\
